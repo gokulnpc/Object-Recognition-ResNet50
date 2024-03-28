@@ -1,12 +1,7 @@
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-
-version_fn = getattr(tf.keras, "version", None)
-if version_fn and version_fn().startswith("3."):
-  import tf_keras as keras
-else:
-  keras = tf.keras
+from tensorflow import keras
   
 
 loaded_model = load_model('my_model.h5')
