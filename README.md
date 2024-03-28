@@ -4,6 +4,8 @@ This is a web app to predict the object in an image using the ResNet50 model. Th
 
 The objects are: Airplane, Automobile, Bird, Cat, Deer, Dog, Frog, Horse, Ship, Truck
 
+![alt text](image-3.png)
+
 ![alt text](image.png)
 
 ![alt text](image-1.png)

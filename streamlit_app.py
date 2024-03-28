@@ -1,9 +1,6 @@
 import streamlit as st
 import tensorflow as tf
-import tensorflow_hub as hub
-from tensorflow.keras.applications.resnet50 import ResNet50
-from tensorflow.keras import models, layers
-from tensorflow.keras import optimizers
+from tensorflow.keras.models import load_model
 
 version_fn = getattr(tf.keras, "version", None)
 if version_fn and version_fn().startswith("3."):
@@ -11,25 +8,8 @@ if version_fn and version_fn().startswith("3."):
 else:
   keras = tf.keras
   
-convolutional_base = ResNet50(weights='imagenet', include_top=False, input_shape=(256,256,3))
-num_of_classes = 10
 
-loaded_model = models.Sequential()
-loaded_model.add(layers.UpSampling2D((2,2)))
-loaded_model.add(layers.UpSampling2D((2,2)))
-loaded_model.add(layers.UpSampling2D((2,2)))
-loaded_model.add(convolutional_base)
-loaded_model.add(layers.Flatten())
-loaded_model.add(layers.BatchNormalization())
-loaded_model.add(layers.Dense(128, activation='relu'))
-loaded_model.add(layers.Dropout(0.5))
-loaded_model.add(layers.BatchNormalization())
-loaded_model.add(layers.Dense(64, activation='relu'))
-loaded_model.add(layers.Dropout(0.5))
-loaded_model.add(layers.BatchNormalization())
-loaded_model.add(layers.Dense(num_of_classes, activation='softmax'))
-# load weights
-loaded_model.load_weights('model_weights.h5', by_name=True, skip_mismatch=True)
+loaded_model = load_model('my_model.h5')
 def process_image(image):
     # with keras
     img = keras.preprocessing.image.load_img(image, target_size=(32, 32))
